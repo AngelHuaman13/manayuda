@@ -49,8 +49,8 @@ async function cargarComedores() {
     "Aún no hay comedores registrados.");
 }
 
-function mostrarMensaje(texto, tipo) {
-  const p = $("mensaje");
+function mostrarMensaje(texto, tipo, id = "mensaje") {
+  const p = $(id);
   p.textContent = texto;
   p.className = tipo;
 }
@@ -84,7 +84,99 @@ $("form-donacion").addEventListener("submit", async (e) => {
   } catch {
     mostrarMensaje("No se pudo conectar con el servidor.", "error");
   }
+  cargarSelects();
+});
+
+
+function llenarSelect(select, datos, etiqueta, vacio) {
+  select.replaceChildren();
+  if (datos.length === 0) {
+    const o = document.createElement("option");
+    o.value = "";
+    o.textContent = vacio;
+    select.append(o);
+    return;
+  }
+  for (const d of datos) {
+    const o = document.createElement("option");
+    o.value = d.id;
+    o.textContent = etiqueta(d);
+    select.append(o);
+  }
+}
+
+async function cargarSelects() {
+  const [disponibles, asignadas, comedores] = await Promise.all([
+    fetch("/api/donaciones?estado=DISPONIBLE").then((r) => r.json()),
+    fetch("/api/donaciones?estado=ASIGNADA").then((r) => r.json()),
+    fetch("/api/comedores").then((r) => r.json())
+  ]);
+  llenarSelect($("entrega-donacion"), [...disponibles, ...asignadas],
+    (d) => `${d.producto} — ${d.cantidad} ${d.unidad} (${d.estado})`,
+    "No hay donaciones por entregar");
+  llenarSelect($("entrega-comedor"), comedores,
+    (c) => c.nombre, "No hay comedores registrados");
+}
+
+async function cargarEntregas() {
+  const res = await fetch("/api/entregas");
+  const datos = await res.json();
+  pintar($("lista-entregas"), datos,
+    (e) => [
+      `${e.producto} — ${e.cantidadEntregada} ${e.unidad}`,
+      `Entregado a ${e.comedor}` + (e.observaciones ? ` · ${e.observaciones}` : "")
+    ],
+    "Aún no hay entregas.");
+}
+
+const ERRORES_ENTREGA = {
+  400: "Revisa los datos ingresados.",
+  404: "La donación o el comedor ya no existe.",
+  409: "No se pudo: la cantidad supera lo que queda, o la donación ya se entregó o venció."
+};
+
+$("form-entrega").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const idDonacion = $("entrega-donacion").value;
+  const idComedor = $("entrega-comedor").value;
+  if (!idDonacion || !idComedor) {
+    mostrarMensaje("Elige una donación y un comedor.", "error", "mensaje-entrega");
+    return;
+  }
+
+  const body = {
+    idDonacion: Number(idDonacion),
+    idComedor: Number(idComedor),
+    cantidadEntregada: Number($("entrega-cantidad").value),
+    observaciones: $("entrega-obs").value.trim() || null
+  };
+
+  try {
+    const res = await fetch("/api/entregas", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body)
+    });
+
+    if (!res.ok) {
+      mostrarMensaje(ERRORES_ENTREGA[res.status] || "Ocurrió un error inesperado.",
+        "error", "mensaje-entrega");
+      return;
+    }
+
+    mostrarMensaje("Entrega registrada.", "ok", "mensaje-entrega");
+    e.target.reset();
+    cargarDonaciones();
+    cargarSelects();
+    cargarEntregas();
+  } catch {
+    mostrarMensaje("No se pudo conectar con el servidor.", "error", "mensaje-entrega");
+  }
 });
 
 cargarDonaciones();
 cargarComedores();
+cargarSelects();
+cargarEntregas();
+

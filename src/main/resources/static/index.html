@@ -47,6 +47,31 @@
       <ul id="lista-donaciones" class="lista"></ul>
     </section>
 
+        <section class="card">
+      <h2>Asignar donación a un comedor</h2>
+      <form id="form-entrega">
+        <label>Donación
+          <select id="entrega-donacion" required></select>
+        </label>
+        <label>Comedor
+          <select id="entrega-comedor" required></select>
+        </label>
+        <label>Cantidad a entregar
+          <input type="number" id="entrega-cantidad" step="0.01" min="0.01" required>
+        </label>
+        <label>Observaciones (opcional)
+          <input type="text" id="entrega-obs" maxlength="255">
+        </label>
+        <button type="submit">Registrar entrega</button>
+        <p id="mensaje-entrega" role="status"></p>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>Entregas realizadas</h2>
+      <ul id="lista-entregas" class="lista"></ul>
+    </section>
+
     <section class="card">
       <h2>Comedores populares</h2>
       <ul id="lista-comedores" class="lista"></ul>
