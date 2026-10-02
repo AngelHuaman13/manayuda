@@ -1,0 +1,109 @@
+/* Estilos solo para la página de acceso */
+.auth {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+/* Panel izquierdo (marca) */
+.auth-brand {
+  background: linear-gradient(160deg, var(--verde), #1f5c38);
+  color: #fff;
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+}
+.auth-brand h1 { margin: 0; font-size: 3rem; }
+.auth-brand h1 span { color: #ffd9b8; }
+.auth-brand p { margin: 0; font-size: 1.15rem; opacity: .92; max-width: 28rem; }
+.auth-brand ul { list-style: none; margin: 1rem 0 0; padding: 0; display: grid; gap: .7rem; }
+.auth-brand li { opacity: .95; }
+.auth-brand li::before { content: "✓"; color: #ffd9b8; font-weight: 700; margin-right: .6rem; }
+
+/* Panel derecho (formulario) */
+.auth-panel {
+  background: var(--fondo);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+.auth-box {
+  width: 100%;
+  max-width: 400px;
+  background: #fff;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, .08);
+}
+
+/* Pestañas */
+.tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: #f0ebe3;
+  border-radius: 10px;
+  padding: 4px;
+  margin-bottom: 1.5rem;
+}
+.tab {
+  background: transparent;
+  color: #666;
+  padding: .6rem;
+  border-radius: 8px;
+  font-size: .95rem;
+}
+.tab:hover { filter: none; color: var(--texto); }
+.tab.activa {
+  background: #fff;
+  color: var(--verde);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, .12);
+}
+
+/* Formularios */
+.auth-box form { gap: 1rem; }
+.auth-box h2 { margin: 0 0 .25rem; color: var(--texto); font-size: 1.4rem; }
+.sub { margin: 0; color: #666; font-size: .95rem; }
+
+.auth-box input,
+.auth-box select { width: 100%; padding: .75rem; }
+.auth-box input:focus,
+.auth-box select:focus {
+  outline: none;
+  border-color: var(--verde);
+  box-shadow: 0 0 0 3px rgba(47, 125, 79, .18);
+}
+
+/* Contraseña con botón mostrar/ocultar */
+.campo-clave { position: relative; }
+.campo-clave input { padding-right: 5rem; }
+.ver {
+  position: absolute;
+  right: .4rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  color: var(--verde);
+  padding: .3rem .6rem;
+  font-size: .85rem;
+}
+.ver:hover { filter: none; text-decoration: underline; }
+
+.principal { width: 100%; padding: .85rem; }
+
+#mensaje-login, #mensaje-registro { margin: 0; min-height: 1.2rem; font-size: .9rem; }
+
+.cambio { margin: 0; text-align: center; font-size: .9rem; color: #666; }
+.cambio a { color: var(--verde); font-weight: 600; text-decoration: none; }
+.cambio a:hover { text-decoration: underline; }
+
+/* Celular: se quita el panel de marca */
+@media (max-width: 800px) {
+  .auth { grid-template-columns: 1fr; }
+  .auth-brand { padding: 1.5rem; }
+  .auth-brand h1 { font-size: 2rem; }
+  .auth-brand ul { display: none; }
+  .auth-panel { padding: 1rem; }
+}

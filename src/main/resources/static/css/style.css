@@ -63,7 +63,11 @@ button {
 }
 button:hover { filter: brightness(.95); }
 
-#mensaje, #mensaje-entrega { margin: 0; min-height: 1.2rem; font-weight: 600; }
+#mensaje, #mensaje-entrega, #mensaje-login, #mensaje-registro {
+  margin: 0;
+  min-height: 1.2rem;
+  font-weight: 600;
+}
 .ok { color: var(--verde); }
 .error { color: #c0392b; }
 
@@ -71,3 +75,14 @@ button:hover { filter: brightness(.95); }
 .lista li { padding: .7rem; background: var(--fondo); border-radius: 8px; }
 .lista strong { display: block; }
 .lista small { color: #666; }
+
+[hidden] { display: none !important; }
+
+.barra-sesion {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+.barra-sesion h2 { margin: 0; font-size: 1.1rem; }
+.barra-sesion button { padding: .5rem 1rem; }

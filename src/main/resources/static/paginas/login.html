@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ManayudaApp - Acceso</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/login.css">
+</head>
+<body>
+  <div class="auth">
+
+    <aside class="auth-brand">
+      <h1>Mana<span>Yuda</span></h1>
+      <p>Conectamos donantes con comedores populares de Villa El Salvador.</p>
+      <ul>
+        <li>Dona alimentos de forma sencilla</li>
+        <li>Apoya a los comedores de tu zona</li>
+        <li>Sigue cada entrega registrada</li>
+      </ul>
+    </aside>
+
+    <section class="auth-panel">
+      <div class="auth-box">
+
+        <div class="tabs" role="tablist">
+          <button type="button" class="tab activa" id="tab-login" role="tab" aria-selected="true">Iniciar sesión</button>
+          <button type="button" class="tab" id="tab-registro" role="tab" aria-selected="false">Registrarse</button>
+        </div>
+
+        <form id="form-login">
+          <div>
+            <h2>Bienvenido de nuevo</h2>
+            <p class="sub">Ingresa con tu cuenta para continuar.</p>
+          </div>
+          <label>Email
+            <input type="email" id="login-email" placeholder="tucorreo@ejemplo.com" autocomplete="email" required>
+          </label>
+          <label>Contraseña
+            <div class="campo-clave">
+              <input type="password" id="login-password" placeholder="Tu contraseña" autocomplete="current-password" required>
+              <button type="button" class="ver" data-objetivo="login-password">Mostrar</button>
+            </div>
+          </label>
+          <button type="submit" class="principal">Iniciar sesión</button>
+          <p id="mensaje-login" role="status"></p>
+          <p class="cambio">¿No tienes cuenta? <a href="#" id="ir-registro">Regístrate</a></p>
+        </form>
+
+        <form id="form-registro" hidden>
+          <div>
+            <h2>Crea tu cuenta</h2>
+            <p class="sub">Es gratis y toma menos de un minuto.</p>
+          </div>
+          <label>Nombre
+            <input type="text" id="reg-nombre" maxlength="100" placeholder="Tu nombre" autocomplete="name" required>
+          </label>
+          <label>Email
+            <input type="email" id="reg-email" maxlength="120" placeholder="tucorreo@ejemplo.com" autocomplete="email" required>
+          </label>
+          <label>Contraseña
+            <div class="campo-clave">
+              <input type="password" id="reg-password" minlength="8" maxlength="72" placeholder="Mínimo 8 caracteres" autocomplete="new-password" required>
+              <button type="button" class="ver" data-objetivo="reg-password">Mostrar</button>
+            </div>
+          </label>
+          <label>Soy
+            <select id="reg-rol">
+              <option value="DONANTE">Donante</option>
+              <option value="COMEDOR">Comedor popular</option>
+            </select>
+          </label>
+          <button type="submit" class="principal">Crear cuenta</button>
+          <p id="mensaje-registro" role="status"></p>
+          <p class="cambio">¿Ya tienes cuenta? <a href="#" id="ir-login">Inicia sesión</a></p>
+        </form>
+
+      </div>
+    </section>
+
+  </div>
+
+  <script src="/js/login.js"></script>
+</body>
+</html>

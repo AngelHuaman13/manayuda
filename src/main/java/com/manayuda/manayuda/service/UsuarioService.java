@@ -1,5 +1,6 @@
 package com.manayuda.manayuda.service;
 
+import com.manayuda.manayuda.dto.LoginRequest;
 import com.manayuda.manayuda.dto.UsuarioRequest;
 import com.manayuda.manayuda.dto.UsuarioResponse;
 import com.manayuda.manayuda.model.Rol;
@@ -44,6 +45,15 @@ public class UsuarioService {
     @Transactional(readOnly = true)
     public List<UsuarioResponse> listar() {
         return usuarioRepository.findAll().stream().map(this::toResponse).toList();
+    }
+
+    @Transactional(readOnly = true)
+    public UsuarioResponse login(LoginRequest req) {
+        Usuario u = usuarioRepository.findByEmail(req.email())
+                .filter(x -> passwordEncoder.matches(req.password(), x.getPasswordHash()))
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.UNAUTHORIZED, "Credenciales inválidas"));
+        return toResponse(u);
     }
 
     private UsuarioResponse toResponse(Usuario u) {

@@ -13,12 +13,14 @@
   </header>
 
   <main>
-    <section class="card">
+    <section class="card barra-sesion">
+      <h2 id="saludo"></h2>
+      <button type="button" id="btn-salir">Cerrar sesión</button>
+    </section>
+
+    <section class="card" id="seccion-donacion" hidden>
       <h2>Registrar donación</h2>
       <form id="form-donacion">
-        <label>Tu ID de usuario
-          <input type="number" id="idUsuario" min="1" required>
-        </label>
         <label>Producto
           <input type="text" id="producto" maxlength="120" required>
         </label>
@@ -47,7 +49,7 @@
       <ul id="lista-donaciones" class="lista"></ul>
     </section>
 
-        <section class="card">
+    <section class="card">
       <h2>Asignar donación a un comedor</h2>
       <form id="form-entrega">
         <label>Donación

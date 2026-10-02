@@ -1,9 +1,33 @@
 const $ = (id) => document.getElementById(id);
 
+// ---------- Sesión ----------
+const CLAVE_SESION = "manayuda_usuario";
+let usuario = null;
+
+try {
+  usuario = JSON.parse(localStorage.getItem(CLAVE_SESION));
+} catch {
+  usuario = null;
+}
+
+if (!usuario) {
+  // Sin sesión: se va al login
+  window.location.replace("/paginas/login.html");
+} else {
+  $("seccion-donacion").hidden = usuario.rol !== "DONANTE";
+  $("saludo").textContent = `Hola, ${usuario.nombre} (${usuario.rol})`;
+}
+
+$("btn-salir").addEventListener("click", () => {
+  try { localStorage.removeItem(CLAVE_SESION); } catch {}
+  window.location.replace("/paginas/login.html");
+});
+
+// ---------- Utilidades ----------
 const ERRORES = {
   400: "Revisa los datos ingresados.",
   403: "Solo los usuarios con rol DONANTE pueden donar.",
-  404: "No existe un usuario con ese ID."
+  404: "Tu usuario ya no existe. Vuelve a ingresar."
 };
 
 // Pinta una lista usando textContent (evita inyectar HTML por error)
@@ -27,6 +51,30 @@ function pintar(ul, datos, armar, vacio) {
   }
 }
 
+function mostrarMensaje(texto, tipo, id = "mensaje") {
+  const p = $(id);
+  p.textContent = texto;
+  p.className = tipo;
+}
+
+function llenarSelect(select, datos, etiqueta, vacio) {
+  select.replaceChildren();
+  if (datos.length === 0) {
+    const o = document.createElement("option");
+    o.value = "";
+    o.textContent = vacio;
+    select.append(o);
+    return;
+  }
+  for (const d of datos) {
+    const o = document.createElement("option");
+    o.value = d.id;
+    o.textContent = etiqueta(d);
+    select.append(o);
+  }
+}
+
+// ---------- Carga de datos ----------
 async function cargarDonaciones() {
   const res = await fetch("/api/donaciones?estado=DISPONIBLE");
   const datos = await res.json();
@@ -47,62 +95,6 @@ async function cargarComedores() {
       `${c.direccion}, ${c.distrito} · ${c.personasAtendidas} personas atendidas`
     ],
     "Aún no hay comedores registrados.");
-}
-
-function mostrarMensaje(texto, tipo, id = "mensaje") {
-  const p = $(id);
-  p.textContent = texto;
-  p.className = tipo;
-}
-
-$("form-donacion").addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  const body = {
-    idUsuario: Number($("idUsuario").value),
-    producto: $("producto").value.trim(),
-    cantidad: Number($("cantidad").value),
-    unidad: $("unidad").value,
-    fechaVencimiento: $("fechaVencimiento").value || null
-  };
-
-  try {
-    const res = await fetch("/api/donaciones", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body)
-    });
-
-    if (!res.ok) {
-      mostrarMensaje(ERRORES[res.status] || "Ocurrió un error inesperado.", "error");
-      return;
-    }
-
-    mostrarMensaje("¡Gracias por tu donación!", "ok");
-    e.target.reset();
-    cargarDonaciones();
-  } catch {
-    mostrarMensaje("No se pudo conectar con el servidor.", "error");
-  }
-  cargarSelects();
-});
-
-
-function llenarSelect(select, datos, etiqueta, vacio) {
-  select.replaceChildren();
-  if (datos.length === 0) {
-    const o = document.createElement("option");
-    o.value = "";
-    o.textContent = vacio;
-    select.append(o);
-    return;
-  }
-  for (const d of datos) {
-    const o = document.createElement("option");
-    o.value = d.id;
-    o.textContent = etiqueta(d);
-    select.append(o);
-  }
 }
 
 async function cargarSelects() {
@@ -129,6 +121,45 @@ async function cargarEntregas() {
     "Aún no hay entregas.");
 }
 
+// ---------- Formulario de donación ----------
+$("form-donacion").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  if (!usuario) {
+    mostrarMensaje("Inicia sesión para donar.", "error");
+    return;
+  }
+
+  const body = {
+    idUsuario: usuario.id,
+    producto: $("producto").value.trim(),
+    cantidad: Number($("cantidad").value),
+    unidad: $("unidad").value,
+    fechaVencimiento: $("fechaVencimiento").value || null
+  };
+
+  try {
+    const res = await fetch("/api/donaciones", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body)
+    });
+
+    if (!res.ok) {
+      mostrarMensaje(ERRORES[res.status] || "Ocurrió un error inesperado.", "error");
+      return;
+    }
+
+    mostrarMensaje("¡Gracias por tu donación!", "ok");
+    e.target.reset();
+    cargarDonaciones();
+    cargarSelects();
+  } catch {
+    mostrarMensaje("No se pudo conectar con el servidor.", "error");
+  }
+});
+
+// ---------- Formulario de entrega ----------
 const ERRORES_ENTREGA = {
   400: "Revisa los datos ingresados.",
   404: "La donación o el comedor ya no existe.",
@@ -175,8 +206,8 @@ $("form-entrega").addEventListener("submit", async (e) => {
   }
 });
 
+// ---------- Carga inicial ----------
 cargarDonaciones();
 cargarComedores();
 cargarSelects();
 cargarEntregas();
-
