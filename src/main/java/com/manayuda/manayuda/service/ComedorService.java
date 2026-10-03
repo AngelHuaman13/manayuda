@@ -3,6 +3,7 @@ package com.manayuda.manayuda.service;
 import com.manayuda.manayuda.dto.ComedorRequest;
 import com.manayuda.manayuda.dto.ComedorResponse;
 import com.manayuda.manayuda.model.Comedor;
+import com.manayuda.manayuda.model.Rol;
 import com.manayuda.manayuda.model.Usuario;
 import com.manayuda.manayuda.repository.ComedorRepository;
 import com.manayuda.manayuda.repository.UsuarioRepository;
@@ -11,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
-
 
 import java.util.List;
 
@@ -32,6 +32,11 @@ public class ComedorService {
         Usuario usuario = usuarioRepository.findById(req.idUsuario())
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND, "Usuario no encontrado"));
+
+        if (usuario.getRol() != Rol.COMEDOR) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN,
+                    "Solo los usuarios con rol COMEDOR pueden registrar un comedor");
+        }
 
         Comedor c = new Comedor();
         c.setUsuario(usuario);

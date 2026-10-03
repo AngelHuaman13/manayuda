@@ -15,6 +15,7 @@ if (!usuario) {
   window.location.replace("/paginas/login.html");
 } else {
   $("seccion-donacion").hidden = usuario.rol !== "DONANTE";
+  $("seccion-comedor").hidden = usuario.rol !== "COMEDOR";
   $("saludo").textContent = `Hola, ${usuario.nombre} (${usuario.rol})`;
 }
 
@@ -120,6 +121,53 @@ async function cargarEntregas() {
     ],
     "Aún no hay entregas.");
 }
+
+// ---------- Formulario de comedor ----------
+const ERRORES_COMEDOR = {
+  400: "Revisa los datos del comedor.",
+  403: "Solo los usuarios con rol COMEDOR pueden registrar un comedor.",
+  404: "Tu usuario ya no existe. Vuelve a ingresar."
+};
+
+$("form-comedor").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  if (!usuario) {
+    mostrarMensaje("Inicia sesión para registrar tu comedor.", "error", "mensaje-comedor");
+    return;
+  }
+
+  const body = {
+    idUsuario: usuario.id,
+    nombre: $("com-nombre").value.trim(),
+    direccion: $("com-direccion").value.trim(),
+    distrito: $("com-distrito").value.trim(),
+    telefono: $("com-telefono").value.trim() || null,
+    personasAtendidas: $("com-personas").value ? Number($("com-personas").value) : 0
+  };
+
+  try {
+    const res = await fetch("/api/comedores", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body)
+    });
+
+    if (!res.ok) {
+      mostrarMensaje(ERRORES_COMEDOR[res.status] || "Ocurrió un error inesperado.",
+        "error", "mensaje-comedor");
+      return;
+    }
+
+    mostrarMensaje("Comedor registrado.", "ok", "mensaje-comedor");
+    e.target.reset();
+    $("com-distrito").value = "Villa El Salvador";
+    cargarComedores();
+    cargarSelects();
+  } catch {
+    mostrarMensaje("No se pudo conectar con el servidor.", "error", "mensaje-comedor");
+  }
+});
 
 // ---------- Formulario de donación ----------
 $("form-donacion").addEventListener("submit", async (e) => {

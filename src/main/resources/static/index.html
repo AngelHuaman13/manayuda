@@ -18,6 +18,31 @@
       <button type="button" id="btn-salir">Cerrar sesión</button>
     </section>
 
+    <section class="card" id="seccion-comedor" hidden>
+      <h2>Registrar mi comedor</h2>
+      <form id="form-comedor">
+        <label>Nombre del comedor
+          <input type="text" id="com-nombre" maxlength="120" required>
+        </label>
+        <label>Dirección
+          <input type="text" id="com-direccion" maxlength="200" required>
+        </label>
+        <div class="fila">
+          <label>Distrito
+            <input type="text" id="com-distrito" maxlength="80" value="Villa El Salvador" required>
+          </label>
+          <label>Teléfono (opcional)
+            <input type="tel" id="com-telefono" maxlength="20">
+          </label>
+        </div>
+        <label>Personas que atiende
+          <input type="number" id="com-personas" min="0" value="0">
+        </label>
+        <button type="submit">Registrar comedor</button>
+        <p id="mensaje-comedor" role="status"></p>
+      </form>
+    </section>
+
     <section class="card" id="seccion-donacion" hidden>
       <h2>Registrar donación</h2>
       <form id="form-donacion">

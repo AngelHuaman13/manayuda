@@ -86,3 +86,4 @@ button:hover { filter: brightness(.95); }
 }
 .barra-sesion h2 { margin: 0; font-size: 1.1rem; }
 .barra-sesion button { padding: .5rem 1rem; }
+#mensaje-comedor { margin: 0; min-height: 1.2rem; font-weight: 600; }
