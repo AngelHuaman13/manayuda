@@ -5,24 +5,79 @@
   grid-template-columns: 1fr 1fr;
 }
 
-/* Panel izquierdo (marca) */
+/* ---------- Panel izquierdo (marca) ---------- */
 .auth-brand {
-  background: linear-gradient(160deg, var(--verde), #1f5c38);
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(160deg, var(--verde), var(--verde-oscuro));
   color: #fff;
   padding: 3rem;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 1rem;
+  justify-content: space-between;
+  gap: 2rem;
+}
+/* Marca de agua: el logo grande y muy tenue al fondo */
+.auth-brand::after {
+  content: "";
+  position: absolute;
+  right: -140px;
+  bottom: -140px;
+  width: 520px;
+  height: 520px;
+  background: url("/img/logo-icono.svg") no-repeat center / contain;
+  opacity: .045;
+  pointer-events: none;
+}
+.auth-brand > * { position: relative; z-index: 1; }
+
+.auth-logo {
+  width: 120px;
+  height: 120px;
+  display: block;
+  margin-bottom: 1rem;
+  filter: drop-shadow(0 8px 18px rgba(0, 0, 0, .3));
 }
 .auth-brand h1 { margin: 0; font-size: 3rem; }
 .auth-brand h1 span { color: #ffd9b8; }
-.auth-brand p { margin: 0; font-size: 1.15rem; opacity: .92; max-width: 28rem; }
-.auth-brand ul { list-style: none; margin: 1rem 0 0; padding: 0; display: grid; gap: .7rem; }
-.auth-brand li { opacity: .95; }
-.auth-brand li::before { content: "✓"; color: #ffd9b8; font-weight: 700; margin-right: .6rem; }
+.auth-brand .brand-top p {
+  margin: .35rem 0 0;
+  font-size: 1.15rem;
+  opacity: .92;
+  max-width: 28rem;
+}
 
-/* Panel derecho (formulario) */
+/* Lista de beneficios con checks */
+.beneficios {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1.35rem;
+  max-width: 26rem;
+}
+.beneficios li {
+  display: flex;
+  align-items: flex-start;
+  gap: .95rem;
+}
+.check {
+  flex: none;
+  width: 26px;
+  height: 26px;
+  margin-top: .1rem;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, .35);
+  background: rgba(255, 255, 255, .14)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffd9b8' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E")
+    no-repeat center / 14px;
+}
+.beneficios strong { display: block; font-size: 1.05rem; }
+.beneficios small { display: block; margin-top: .2rem; font-size: .9rem; opacity: .85; line-height: 1.45; }
+
+.auth-brand .brand-pie { margin: 0; font-size: .85rem; opacity: .6; }
+
+/* ---------- Panel derecho (formulario) ---------- */
 .auth-panel {
   background: var(--fondo);
   display: flex;
@@ -73,7 +128,7 @@
 .auth-box select:focus {
   outline: none;
   border-color: var(--verde);
-  box-shadow: 0 0 0 3px rgba(47, 125, 79, .18);
+  box-shadow: 0 0 0 3px rgba(184, 67, 31, .18);
 }
 
 /* Contraseña con botón mostrar/ocultar */
@@ -95,15 +150,21 @@
 
 #mensaje-login, #mensaje-registro { margin: 0; min-height: 1.2rem; font-size: .9rem; }
 
+/* El mensaje solo ocupa espacio cuando tiene texto */
+#mensaje-login:empty,
+#mensaje-registro:empty { display: none; }
+
 .cambio { margin: 0; text-align: center; font-size: .9rem; color: #666; }
 .cambio a { color: var(--verde); font-weight: 600; text-decoration: none; }
 .cambio a:hover { text-decoration: underline; }
 
-/* Celular: se quita el panel de marca */
+/* ---------- Celular ---------- */
 @media (max-width: 800px) {
   .auth { grid-template-columns: 1fr; }
-  .auth-brand { padding: 1.5rem; }
+  .auth-brand { padding: 1.5rem; gap: 0; }
+  .auth-brand::after { display: none; }
+  .auth-logo { width: 84px; height: 84px; margin-bottom: .6rem; }
   .auth-brand h1 { font-size: 2rem; }
-  .auth-brand ul { display: none; }
+  .beneficios, .brand-pie { display: none; }
   .auth-panel { padding: 1rem; }
 }
