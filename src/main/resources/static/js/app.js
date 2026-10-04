@@ -32,6 +32,12 @@ const ERRORES = {
   404: "Tu usuario ya no existe. Vuelve a ingresar."
 };
 
+const ETIQUETAS = {
+  DISPONIBLE: "Disponible",
+  ASIGNADA: "En entrega",
+  ENTREGADA: "Entregada"
+};
+
 // Pinta una lista usando textContent (evita inyectar HTML por error)
 function pintar(ul, datos, armar, vacio) {
   ul.replaceChildren();
@@ -42,12 +48,20 @@ function pintar(ul, datos, armar, vacio) {
     return;
   }
   for (const dato of datos) {
-    const [titulo, detalle] = armar(dato);
+    const [titulo, detalle, estado] = armar(dato);
     const li = document.createElement("li");
     const strong = document.createElement("strong");
     const small = document.createElement("small");
     strong.textContent = titulo;
     small.textContent = detalle;
+
+    if (estado) {
+      const badge = document.createElement("span");
+      badge.className = `badge badge-${estado.toLowerCase()}`;
+      badge.textContent = ETIQUETAS[estado] || estado;
+      li.append(badge);
+    }
+
     li.append(strong, small);
     ul.append(li);
   }
@@ -78,14 +92,15 @@ function llenarSelect(select, datos, etiqueta, vacio) {
 
 // ---------- Carga de datos ----------
 async function cargarDonaciones() {
-  const res = await fetch("/api/donaciones?estado=DISPONIBLE");
+  const res = await fetch("/api/donaciones");
   const datos = await res.json();
   pintar($("lista-donaciones"), datos,
     (d) => [
       `${d.producto} — ${d.cantidad} ${d.unidad}`,
-      d.fechaVencimiento ? `Vence: ${d.fechaVencimiento}` : "Sin fecha de vencimiento"
+      d.fechaVencimiento ? `Vence: ${d.fechaVencimiento}` : "Sin fecha de vencimiento",
+      d.estado
     ],
-    "Aún no hay donaciones disponibles.");
+    "Aún no hay donaciones registradas.");
 }
 
 async function cargarComedores() {
@@ -106,7 +121,7 @@ async function cargarSelects() {
     fetch("/api/comedores").then((r) => r.json())
   ]);
   llenarSelect($("entrega-donacion"), [...disponibles, ...asignadas],
-    (d) => `${d.producto} — ${d.cantidad} ${d.unidad} (${d.estado})`,
+    (d) => `${d.producto} — ${d.cantidad} ${d.unidad} (${ETIQUETAS[d.estado] || d.estado})`,
     "No hay donaciones por entregar");
   llenarSelect($("entrega-comedor"), comedores,
     (c) => c.nombre, "No hay comedores registrados");

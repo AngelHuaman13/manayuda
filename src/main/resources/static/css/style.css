@@ -217,3 +217,15 @@ button:active { transform: translateY(1px); }
 }
 .footer-links a:hover { background: rgba(255, 255, 255, .18); }
 .footer-tec { margin: 0; font-size: .8rem; opacity: .7; }
+
+.badge {
+  display: inline-block;
+  margin-bottom: .35rem;
+  padding: .15rem .6rem;
+  border-radius: 999px;
+  font-size: .72rem;
+  font-weight: 700;
+}
+.badge-disponible { background: #e1f1e7; color: #1f6b3f; }
+.badge-asignada { background: #fdeede; color: #b0561a; }
+.badge-entregada { background: #ececec; color: #555; }
