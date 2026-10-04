@@ -16,6 +16,7 @@ if (!usuario) {
 } else {
   $("seccion-donacion").hidden = usuario.rol !== "DONANTE";
   $("seccion-comedor").hidden = usuario.rol !== "COMEDOR";
+  $("seccion-entrega").hidden = usuario.rol !== "COMEDOR";
   $("saludo").textContent = `Hola, ${usuario.nombre} (${usuario.rol})`;
 }
 

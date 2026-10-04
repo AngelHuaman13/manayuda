@@ -47,4 +47,7 @@ Capas: `controller` → `service` → `repository` → MySQL. Se usan DTOs para 
 
 ## Autor
 
-Angel Oscar Moscoso Huaman, estudiante de Ingeniería de Software (UTP).
+**Angel Oscar Moscoso Huaman**, estudiante de Ingeniería de Software (UTP).
+
+- GitHub: [AngelHuaman13](https://github.com/AngelHuaman13)
+- Correo: mangel.roben@gmail.com
