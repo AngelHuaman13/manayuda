@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -51,7 +51,15 @@ public class DonacionService {
         List<Donacion> lista = (estado == null)
                 ? donacionRepository.findAll()
                 : donacionRepository.findByEstado(estado);
-        return lista.stream().map(this::toResponse).toList();
+
+        LocalDate hoy = LocalDate.now();
+        return lista.stream()
+                // Las vencidas que no se entregaron ya no se muestran
+                .filter(d -> d.getEstado() == EstadoDonacion.ENTREGADA
+                        || d.getFechaVencimiento() == null
+                        || !d.getFechaVencimiento().isBefore(hoy))
+                .map(this::toResponse)
+                .toList();
     }
 
     private DonacionResponse toResponse(Donacion d) {
