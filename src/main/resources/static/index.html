@@ -3,135 +3,108 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ManayudaApp</title>
+  <title>ManaYuda - Donar alimentos, compartir esperanza</title>
+  <link rel="icon" href="/img/logo-icono.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="icon" href="/img/logo-icono.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/inicio.css">
 </head>
 <body>
-  <header class="topbar">
-    <div class="topbar-in">
-        <a class="logo" href="/index.html">
+
+  <header class="lp-nav">
+    <div class="lp-nav-in">
+      <a class="lp-logo" href="/">
         <img src="/img/logo-icono.svg" alt="">
         <span>Mana<b>Yuda</b></span>
       </a>
-      <div class="sesion">
-        <span id="saludo"></span>
-        <button type="button" id="btn-salir">Cerrar sesión</button>
+      <nav class="lp-links">
+        <a href="#como-funciona">Cómo funciona</a>
+        <a href="#donaciones">Donaciones</a>
+        <a href="#comedores">Comedores</a>
+      </nav>
+      <div class="lp-acciones" id="acciones-visitante">
+        <a class="btn-ghost" href="/paginas/login.html">Iniciar sesión</a>
+        <a class="btn-solid" href="/paginas/login.html#registro">Crear cuenta</a>
+      </div>
+        <div class="lp-acciones" id="acciones-sesion" hidden>
+        <span class="lp-usuario" id="lp-nombre"></span>
+        <a class="btn-solid" href="/panel.html">Ir a mi panel</a>
+        <button type="button" class="btn-ghost" id="lp-salir">Cerrar sesión</button>
       </div>
     </div>
   </header>
 
-  <section class="banner">
-    <div class="banner-in">
-      <h1 id="banner-titulo">Panel de ManaYuda</h1>
-      <p id="banner-texto">Conectamos donantes con comedores populares de Villa El Salvador.</p>
+  <section class="lp-hero">
+    <div class="lp-hero-in">
+      <div>
+        <span class="lp-chip">Villa El Salvador, Lima</span>
+        <h1>Donar alimentos, <em>compartir esperanza</em></h1>
+        <p>ManaYuda conecta a quienes quieren donar alimentos con los comedores populares que los necesitan. Registra tu donación y sigue cada entrega.</p>
+        <div class="lp-cta">
+          <a class="btn-solid grande" href="/paginas/login.html#registro">Quiero donar</a>
+          <a class="btn-ghost-claro grande" href="/paginas/login.html#registro-comedor">Soy un comedor</a>
+        </div>
+      </div>
+      <img class="lp-hero-logo" src="/img/logo-icono.svg" alt="">
     </div>
   </section>
 
-  <section class="stats">
-    <div class="stat"><div class="stat-icono">🥫</div><div><strong id="stat-donaciones">–</strong><span>Donaciones activas</span></div></div>
-    <div class="stat"><div class="stat-icono">🍲</div><div><strong id="stat-comedores">–</strong><span>Comedores</span></div></div>
-    <div class="stat"><div class="stat-icono">📦</div><div><strong id="stat-entregas">–</strong><span>Entregas hechas</span></div></div>
-    <div class="stat"><div class="stat-icono">⚖️</div><div><strong id="stat-kg">–</strong><span>Kg entregados</span></div></div>
+  <section class="lp-stats">
+    <div class="lp-stat"><strong id="ls-donaciones">–</strong><span>Donaciones activas</span></div>
+    <div class="lp-stat"><strong id="ls-comedores">–</strong><span>Comedores</span></div>
+    <div class="lp-stat"><strong id="ls-entregas">–</strong><span>Entregas hechas</span></div>
+    <div class="lp-stat"><strong id="ls-kg">–</strong><span>Kg entregados</span></div>
   </section>
 
-  <main class="panel">
-    <div class="col">
-
-      <section class="card" id="seccion-comedor" hidden>
-        <h2>🏠 Registrar mi comedor</h2>
-        <form id="form-comedor">
-          <label>Nombre del comedor
-            <input type="text" id="com-nombre" maxlength="120" required>
-          </label>
-          <label>Dirección
-            <input type="text" id="com-direccion" maxlength="200" required>
-          </label>
-          <div class="fila">
-            <label>Distrito
-              <input type="text" id="com-distrito" maxlength="80" value="Villa El Salvador" required>
-            </label>
-            <label>Teléfono (opcional)
-              <input type="tel" id="com-telefono" maxlength="20">
-            </label>
-          </div>
-          <label>Personas que atiende
-            <input type="number" id="com-personas" min="0" value="0">
-          </label>
-          <button type="submit">Registrar comedor</button>
-          <p id="mensaje-comedor" role="status"></p>
-        </form>
-      </section>
-
-      <section class="card" id="seccion-donacion" hidden>
-        <h2>🎁 Registrar donación</h2>
-        <form id="form-donacion">
-          <label>Producto
-            <input type="text" id="producto" maxlength="120" required>
-          </label>
-          <div class="fila">
-            <label>Cantidad
-              <input type="number" id="cantidad" step="0.01" min="0.01" required>
-            </label>
-            <label>Unidad
-              <select id="unidad">
-                <option>kg</option>
-                <option>litros</option>
-                <option>unidades</option>
-              </select>
-            </label>
-          </div>
-          <label>Fecha de vencimiento (opcional)
-            <input type="date" id="fechaVencimiento">
-          </label>
-          <button type="submit">Donar</button>
-          <p id="mensaje" role="status"></p>
-        </form>
-      </section>
-
-      <section class="card" id="seccion-entrega" hidden>
-        <h2>🚚 Asignar donación a un comedor</h2>
-        <form id="form-entrega">
-          <label>Donación
-            <select id="entrega-donacion" required></select>
-          </label>
-          <label>Comedor
-            <select id="entrega-comedor" required></select>
-          </label>
-          <label>Cantidad a entregar
-            <input type="number" id="entrega-cantidad" step="0.01" min="0.01" required>
-          </label>
-          <label>Observaciones (opcional)
-            <input type="text" id="entrega-obs" maxlength="255">
-          </label>
-          <button type="submit">Registrar entrega</button>
-          <p id="mensaje-entrega" role="status"></p>
-        </form>
-      </section>
-
+  <section class="lp-sec" id="como-funciona">
+    <h2>Cómo funciona</h2>
+    <p class="lp-sub">Tres pasos para que la ayuda llegue a quien la necesita.</p>
+    <div class="lp-pasos">
+      <div class="lp-paso">
+        <div class="lp-num">1</div>
+        <h3>Dona</h3>
+        <p>Los donantes registran alimentos con su cantidad y fecha de vencimiento.</p>
+      </div>
+      <div class="lp-paso">
+        <div class="lp-num">2</div>
+        <h3>Asigna</h3>
+        <p>Los comedores populares reciben las donaciones y se descuenta lo entregado.</p>
+      </div>
+      <div class="lp-paso">
+        <div class="lp-num">3</div>
+        <h3>Sigue</h3>
+        <p>Cada entrega queda registrada: cuánto salió y cuánto queda por repartir.</p>
+      </div>
     </div>
+  </section>
 
-    <div class="col">
-      <section class="card">
-         <h2>🥫 Donaciones</h2>
-        <ul id="lista-donaciones" class="lista"></ul>
-      </section>
+  <section class="lp-sec" id="donaciones">
+    <h2>Donaciones disponibles</h2>
+    <p class="lp-sub">Alimentos que esperan llegar a un comedor.</p>
+    <div class="lp-grid" id="lp-donaciones"></div>
+    <p class="lp-mas" id="mas-donaciones" hidden>Hay más donaciones. <a href="/paginas/login.html">Inicia sesión</a> para verlas todas.</p>
+  </section>
 
-      <section class="card">
-        <h2>📦 Entregas realizadas</h2>
-        <ul id="lista-entregas" class="lista"></ul>
-      </section>
+  <section class="lp-sec" id="comedores">
+    <h2>Comedores populares</h2>
+    <p class="lp-sub">Las comunidades que reciben la ayuda.</p>
+    <div class="lp-grid" id="lp-comedores"></div>
+    <p class="lp-mas" id="mas-comedores" hidden>Hay más comedores. <a href="/paginas/login.html">Inicia sesión</a> para verlos todos.</p>
+  </section>
 
-      <section class="card">
-        <h2>🍲 Comedores populares</h2>
-        <ul id="lista-comedores" class="lista"></ul>
-      </section>
+  <section class="lp-final">
+    <div class="lp-final-in">
+      <h2>¿Quieres ser parte?</h2>
+      <p>Crea tu cuenta gratis y empieza a ayudar hoy.</p>
+      <div class="lp-cta">
+        <a class="btn-solid grande" href="/paginas/login.html#registro">Quiero donar</a>
+        <a class="btn-ghost-claro grande" href="/paginas/login.html#registro-comedor">Soy un comedor</a>
+      </div>
     </div>
-  </main>
+  </section>
 
-    <footer class="footer">
+  <footer class="footer">
     <div class="footer-in">
       <div class="footer-autor">
         <strong>Angel Oscar Moscoso Huaman</strong>
@@ -148,7 +121,6 @@
     </div>
   </footer>
 
-  <script src="js/app.js"></script>
-  <script src="js/panel.js"></script>
+  <script src="/js/inicio.js"></script>
 </body>
 </html>

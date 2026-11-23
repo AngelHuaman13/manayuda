@@ -242,3 +242,42 @@ input:focus, select:focus {
   box-shadow: 0 0 0 3px rgba(184, 67, 31, .18);
 }
 .topbar { background: var(--verde-oscuro); }
+
+/* ===== Tema por rol ===== */
+:root[data-rol="COMEDOR"] {
+  --naranja: #e8742a;
+  --verde: #2f7d4f;
+  --verde-oscuro: #1f5c38;
+  --fondo: #f6f5ea;
+}
+input:focus, select:focus {
+  border-color: var(--verde);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--verde) 22%, transparent);
+}
+
+.rol-chip {
+  display: inline-block;
+  background: rgba(255, 255, 255, .16);
+  border: 1px solid rgba(255, 255, 255, .28);
+  padding: .25rem .8rem;
+  border-radius: 999px;
+  font-size: .8rem;
+  font-weight: 600;
+  margin-bottom: .6rem;
+}
+
+/* ===== Botones de editar / eliminar ===== */
+.acciones { display: flex; gap: .5rem; margin-top: .6rem; }
+.btn-mini {
+  padding: .3rem .8rem;
+  font-size: .8rem;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--verde);
+  border: 1.5px solid var(--verde);
+}
+.btn-mini:hover { background: color-mix(in srgb, var(--verde) 10%, transparent); filter: none; }
+.btn-mini.peligro { color: #c0392b; border-color: #c0392b; }
+.btn-mini.peligro:hover { background: rgba(192, 57, 43, .08); }
+button.secundario { background: transparent; color: #666; border: 1.5px solid #ccc; }
+button.secundario:hover { background: #f4f0ea; filter: none; }

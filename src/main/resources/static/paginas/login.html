@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ManayudaApp - Acceso</title>
+  <title>ManaYuda - Acceso</title>
   <link rel="icon" href="/img/logo-icono.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
@@ -15,12 +15,12 @@
 
     <aside class="auth-brand">
       <div class="brand-top">
-        <img class="auth-logo" src="/img/logo-icono.svg" alt="">
+        <a href="/"><img class="auth-logo" src="/img/logo-icono.svg" alt="ManaYuda, volver al inicio"></a>
         <h1>Mana<span>Yuda</span></h1>
-        <p>Donar alimentos, compartir esperanza.</p>
+        <p id="brand-lema">Donar alimentos, compartir esperanza.</p>
       </div>
 
-            <ul class="beneficios">
+      <ul class="beneficios" id="beneficios">
         <li>
           <span class="check"></span>
           <div>
@@ -79,6 +79,23 @@
             <h2>Crea tu cuenta</h2>
             <p class="sub">Es gratis y toma menos de un minuto.</p>
           </div>
+
+          <div>
+            <p class="roles-t">Quiero registrarme como</p>
+            <div class="roles" role="radiogroup" aria-label="Tipo de cuenta">
+              <label class="rol-card">
+                <input type="radio" name="rol" value="DONANTE" checked>
+                <span class="rol-titulo">Donante</span>
+                <span class="rol-desc">Quiero donar alimentos</span>
+              </label>
+              <label class="rol-card">
+                <input type="radio" name="rol" value="COMEDOR">
+                <span class="rol-titulo">Comedor popular</span>
+                <span class="rol-desc">Quiero recibir donaciones</span>
+              </label>
+            </div>
+          </div>
+
           <label>Nombre
             <input type="text" id="reg-nombre" maxlength="100" placeholder="Tu nombre" autocomplete="name" required>
           </label>
@@ -90,12 +107,6 @@
               <input type="password" id="reg-password" minlength="8" maxlength="72" placeholder="Mínimo 8 caracteres" autocomplete="new-password" required>
               <button type="button" class="ver" data-objetivo="reg-password">Mostrar</button>
             </div>
-          </label>
-          <label>Soy
-            <select id="reg-rol">
-              <option value="DONANTE">Donante</option>
-              <option value="COMEDOR">Comedor popular</option>
-            </select>
           </label>
           <button type="submit" class="principal">Crear cuenta</button>
           <p id="mensaje-registro" role="status"></p>

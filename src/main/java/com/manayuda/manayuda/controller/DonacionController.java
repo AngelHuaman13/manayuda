@@ -28,4 +28,16 @@ public class DonacionController {
     public List<DonacionResponse> listar(@RequestParam(required = false) EstadoDonacion estado) {
         return donacionService.listar(estado);
     }
+
+    @PutMapping("/{id}")
+    public DonacionResponse editar(@PathVariable Integer id,
+                                   @Valid @RequestBody DonacionRequest request) {
+        return donacionService.editar(id, request);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void eliminar(@PathVariable Integer id, @RequestParam Integer idUsuario) {
+        donacionService.eliminar(id, idUsuario);
+    }
 }

@@ -1,0 +1,208 @@
+/* Página de inicio pública */
+html { scroll-behavior: smooth; }
+section[id] { scroll-margin-top: 80px; }
+
+/* ---------- Barra superior ---------- */
+.lp-nav {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: rgba(255, 248, 238, .94);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid #f0e2cf;
+}
+.lp-nav-in {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: .7rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+.lp-logo {
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+  text-decoration: none;
+  color: var(--texto);
+  font-size: 1.35rem;
+  font-weight: 800;
+}
+.lp-logo img { width: 40px; height: 40px; }
+.lp-logo b { color: var(--naranja); }
+.lp-links { display: flex; gap: 1.4rem; margin-left: auto; }
+.lp-links a {
+  color: var(--texto);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: .95rem;
+  opacity: .8;
+}
+.lp-links a:hover { opacity: 1; color: var(--verde); }
+.lp-acciones { display: flex; gap: .6rem; }
+
+/* ---------- Botones ---------- */
+.btn-solid, .btn-ghost, .btn-ghost-claro {
+  display: inline-block;
+  text-decoration: none;
+  font-weight: 700;
+  border-radius: 10px;
+  padding: .6rem 1.1rem;
+  font-size: .95rem;
+  transition: transform .15s, box-shadow .15s, background .15s;
+}
+.btn-solid { background: var(--naranja); color: #fff; }
+.btn-solid:hover { box-shadow: 0 6px 16px rgba(220, 82, 48, .35); transform: translateY(-1px); }
+.btn-ghost { color: var(--verde); border: 1.5px solid var(--verde); }
+.btn-ghost:hover { background: rgba(184, 67, 31, .08); }
+.btn-ghost-claro { color: #fff; border: 1.5px solid rgba(255, 255, 255, .6); }
+.btn-ghost-claro:hover { background: rgba(255, 255, 255, .15); }
+.grande { padding: .85rem 1.5rem; font-size: 1.05rem; }
+
+/* ---------- Portada ---------- */
+.lp-hero {
+  background: linear-gradient(160deg, var(--verde), var(--verde-oscuro));
+  color: #fff;
+  overflow: hidden;
+}
+.lp-hero-in {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 4.5rem 1rem 5.5rem;
+  display: grid;
+  grid-template-columns: 1.3fr .7fr;
+  gap: 2rem;
+  align-items: center;
+}
+.lp-chip {
+  display: inline-block;
+  background: rgba(255, 255, 255, .14);
+  border: 1px solid rgba(255, 255, 255, .25);
+  padding: .3rem .8rem;
+  border-radius: 999px;
+  font-size: .85rem;
+  margin-bottom: 1rem;
+}
+.lp-hero h1 {
+  margin: 0 0 1rem;
+  font-size: clamp(2.1rem, 5vw, 3.4rem);
+  line-height: 1.1;
+}
+.lp-hero h1 em { font-style: normal; color: #ffd9b8; }
+.lp-hero p {
+  margin: 0 0 1.75rem;
+  font-size: 1.15rem;
+  opacity: .92;
+  max-width: 34rem;
+  line-height: 1.55;
+}
+.lp-cta { display: flex; flex-wrap: wrap; gap: .8rem; }
+.lp-hero-logo {
+  width: 100%;
+  max-width: 300px;
+  justify-self: center;
+  filter: drop-shadow(0 18px 40px rgba(0, 0, 0, .35));
+}
+
+/* ---------- Números ---------- */
+.lp-stats {
+  max-width: 1100px;
+  margin: -2.75rem auto 0;
+  padding: 0 1rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  position: relative;
+}
+.lp-stat {
+  background: #fff;
+  border-radius: 14px;
+  padding: 1.1rem 1.2rem;
+  border: 1px solid #f0e8dc;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, .08);
+  text-align: center;
+}
+.lp-stat strong { display: block; font-size: 1.9rem; color: var(--verde); line-height: 1.1; }
+.lp-stat span { color: #666; font-size: .88rem; }
+
+/* ---------- Secciones ---------- */
+.lp-sec { max-width: 1100px; margin: 0 auto; padding: 4rem 1rem 0; }
+.lp-sec h2 { margin: 0 0 .4rem; font-size: 1.8rem; color: var(--texto); }
+.lp-sub { margin: 0 0 1.75rem; color: #666; }
+
+.lp-pasos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+.lp-paso {
+  background: #fff;
+  border: 1px solid #f0e8dc;
+  border-radius: 14px;
+  padding: 1.4rem;
+}
+.lp-num {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--verde);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  margin-bottom: .8rem;
+}
+.lp-paso h3 { margin: 0 0 .35rem; }
+.lp-paso p { margin: 0; color: #666; line-height: 1.5; font-size: .95rem; }
+
+.lp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1.1rem; }
+.lp-card {
+  background: #fff;
+  border: 1px solid #f0e8dc;
+  border-radius: 14px;
+  padding: 1.1rem 1.2rem;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, .05);
+  transition: transform .15s, box-shadow .15s;
+}
+.lp-card:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(0, 0, 0, .09); }
+.lp-card h3 { margin: .2rem 0 .3rem; font-size: 1.15rem; }
+.lp-card p { margin: 0; color: #666; font-size: .92rem; line-height: 1.45; }
+.lp-card .cant { color: var(--verde); font-weight: 800; font-size: 1.05rem; margin-bottom: .2rem; }
+.lp-vacio {
+  grid-column: 1 / -1;
+  background: #fff;
+  border: 1px dashed #e0cfb8;
+  border-radius: 14px;
+  padding: 1.5rem;
+  text-align: center;
+  color: #777;
+}
+.lp-mas { margin-top: 1.25rem; text-align: center; color: #666; font-size: .95rem; }
+.lp-mas a { color: var(--verde); font-weight: 700; }
+
+/* ---------- Llamado final ---------- */
+.lp-final { max-width: 1100px; margin: 4rem auto 0; padding: 0 1rem; }
+.lp-final-in {
+  background: linear-gradient(160deg, var(--verde), var(--verde-oscuro));
+  color: #fff;
+  border-radius: 20px;
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+}
+.lp-final h2 { margin: 0 0 .5rem; font-size: 1.7rem; }
+.lp-final p { margin: 0 0 1.4rem; opacity: .92; }
+.lp-final .lp-cta { justify-content: center; }
+
+/* ---------- Celular ---------- */
+@media (max-width: 860px) {
+  .lp-links { display: none; }
+  .lp-acciones { margin-left: auto; }
+  .lp-acciones .btn-solid, .lp-acciones .btn-ghost { padding: .5rem .8rem; font-size: .85rem; }
+  .lp-hero-in { grid-template-columns: 1fr; padding: 3rem 1rem 4.5rem; }
+  .lp-hero-logo { max-width: 130px; order: -1; justify-self: start; }
+  .lp-stats { grid-template-columns: 1fr 1fr; }
+  .lp-pasos { grid-template-columns: 1fr; }
+}
+
+.lp-usuario { align-self: center; font-weight: 600; font-size: .9rem; color: var(--texto); }
+button.btn-ghost { background: transparent; cursor: pointer; font-family: inherit; }
+
+@media (max-width: 860px) {
+  .lp-usuario { display: none; }
+}

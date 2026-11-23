@@ -62,6 +62,48 @@ public class DonacionService {
                 .toList();
     }
 
+    @Transactional
+    public DonacionResponse editar(Integer id, DonacionRequest req) {
+        Donacion d = buscarDelDueno(id, req.idUsuario());
+        exigirSinEntregas(d, "editar");
+
+        d.setProducto(req.producto());
+        d.setCantidad(req.cantidad());
+        d.setUnidad(req.unidad());
+        d.setFechaVencimiento(req.fechaVencimiento());
+
+        // No hace falta llamar a save: al estar dentro de @Transactional, JPA guarda el cambio solo
+        return toResponse(d);
+    }
+
+    @Transactional
+    public void eliminar(Integer id, Integer idUsuario) {
+        Donacion d = buscarDelDueno(id, idUsuario);
+        exigirSinEntregas(d, "eliminar");
+        donacionRepository.delete(d);
+    }
+
+    // Busca la donación y comprueba que quien la pide sea su dueño
+    private Donacion buscarDelDueno(Integer id, Integer idUsuario) {
+        Donacion d = donacionRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Donación no encontrada"));
+
+        if (!d.getUsuario().getId().equals(idUsuario)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN,
+                    "Solo quien registró la donación puede modificarla");
+        }
+        return d;
+    }
+
+    // Una donación con entregas ya forma parte del historial y no se toca
+    private void exigirSinEntregas(Donacion d, String accion) {
+        if (d.getEstado() != EstadoDonacion.DISPONIBLE) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                    "No se puede " + accion + ": la donación ya tiene entregas registradas");
+        }
+    }
+
     private DonacionResponse toResponse(Donacion d) {
         return new DonacionResponse(
                 d.getId(),
